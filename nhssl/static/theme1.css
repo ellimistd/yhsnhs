@@ -1,0 +1,22 @@
+/* MENUBAR -- TOP BAR */
+
+#menu ul {background: url('theme1_menubar.gif');}
+#menu ul .nav_item {background: #eeeeff;}
+#menu ul .action_item {background: #eeeeff;}
+#menu ul a {color: #4455aa; text-decoration: none;}
+#menu ul a:hover {color: #8888bb;}
+#menu ul a:hover div {background: #f6f7fb;}
+
+#menu #breadcrumbs {background: url('theme1_menubar.gif');}
+
+#menu #login {background: url('theme1_menubar.gif');}
+#menu #login a {color: #ccccdd; text-decoration: none;}
+#menu #login a:hover {color: #eeeeff; text-decoration: none;}
+
+/* CONTENT */
+#content h1 {color: #4455aa;}
+#content p {color: #333;}
+#content a {color: #4455aa;}
+#content h2 {color: #4455aa;}
+#content h3 {color: #4455aa;}
+

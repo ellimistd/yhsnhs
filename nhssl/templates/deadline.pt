@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+    <span metal:fill-slot="content"> 
+    <a class='navback' href="${request.application_url}/deadlines">Back to List</a>
+     <ul>
+     <li> Deadline for: ${context.appliedClass}</li>
+     <li> Date Due: ${context.dateDue.year}/${context.dateDue.month}/${context.dateDue.day} </li>
+     <li> Total Hours: ${context.hours}</li>
+     <li> Sponsored Hours: ${context.sponsored}</li>
+     </ul>
+     <span tal:condition="pyramid.traversal.find_root(request.context)['users'][logged_in].isAdvisor">
+     <a href="${request.application_url}/deadlines/${context.ID}/edit">Edit</a>
+     </span>
+     </span>
+   </span>
+ </html>

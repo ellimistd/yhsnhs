@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content">
+        <a class='navback' href='${request.application_url}'>Back to Home</a>
+       <span tal:condition='isadmin'>
+        <a href="${request.application_url}/serviceLogs/unverified">View all unverified service events</a> 
+       </span>  
+       <br/>
+      <span tal:condition='not len(context)==0'>
+       <table class='userlist sortable' rules='rows'>
+         <tr>
+          <th> Last Name </th>
+          <th> First Name </th>
+          <th> Total Hours </th>
+          <th> Sponsored Hours </th>
+          <th> Unverified Hours </th>
+          <th> Flagged Hours </th>
+        </tr>
+       <span tal:condition='isadmin'>
+        <span tal:repeat="serviceLog contentlist">
+         <tr tal:condition="not serviceLog[0].user.deactivated">
+         <td><a href="${request.application_url}/serviceLogs/${serviceLog[0].user.username}">${serviceLog[0].user.lastName }</a></td>
+         <td>${serviceLog[0].user.firstName} </td>
+         <td><span tal:condition='serviceLog[1]' style='color:green;'> ${serviceLog[0].user.hours}</span>
+             <span tal:condition='not serviceLog[1]' style='color:red;'> ${serviceLog[0].user.hours}</span>  </td>
+          
+        <td> <span tal:condition='serviceLog[2]' style='color:green;'> ${serviceLog[0].user.sponsored}</span> 
+             <span tal:condition='not serviceLog[2]' style='color:red;'> ${serviceLog[0].user.sponsored}</span>  </td>
+        <td> ${serviceLog[3]} </td>
+        <td> ${serviceLog[4]} </td> 
+        </tr>
+        <tr class="deactivated" tal:condition="serviceLog[0].user.deactivated">
+         <td><a href="${request.application_url}/serviceLogs/${serviceLog[0].user.username}">${serviceLog[0].user.lastName }</a></td>
+         <td>${serviceLog[0].user.firstName} </td>
+         <td><span tal:condition='serviceLog[1]' style='color:green;'> ${serviceLog[0].user.hours}</span>
+             <span tal:condition='not serviceLog[1]' style='color:red;'> ${serviceLog[0].user.hours}</span>  </td>
+          
+        <td> <span tal:condition='serviceLog[2]' style='color:green;'> ${serviceLog[0].user.sponsored}</span> 
+             <span tal:condition='not serviceLog[2]' style='color:red;'> ${serviceLog[0].user.sponsored}</span>  </td> 
+        <td> ${serviceLog[3]} </td>
+        <td> ${serviceLog[4]} </td>
+        </tr>
+        </span>
+        </span>
+         <span tal:condition='not isadmin'>
+          <tr>
+           <td><a href="${request.application_url}/serviceLogs/${logged_in}">${context.__parent__['users'][logged_in].lastName }</a></td>
+           <td>${context.__parent__['users'][logged_in].firstName} </td>
+           <td> ${context.__parent__['users'][logged_in].hours} </td>
+           <td> ${context.__parent__['users'][logged_in].sponsored} </td> 
+          </tr>
+         </span>
+         </table>
+        </span>
+          <p tal:condition="len(context) == 0"> No users' servicelogs have yet been added.  <a href="${request.application_url}/users/add_user"> Add User? </a> </p>
+        <br/>
+     </span>
+   </span>
+ </html>

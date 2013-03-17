@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<span metal:define-macro="master">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+  <title>Login - NHSSL</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+  <link rel="stylesheet"
+        href="${request.static_url('nhssl:static/style.css')}"
+        type="text/css" media="screen" charset="utf-8" />
+  <!--[if lte IE 6]>
+  <link rel="stylesheet"
+        href="${request.static_url('nhssl:static/ie6.css')}"
+        type="text/css" media="screen" charset="utf-8" />
+  <![endif]-->
+</head>
+ <body>
+  <div class="header">
+   <h1> <a  href='${request.application_url}'>NHS Service Log</a> </h1>
+  </div>
+  <div class='content'>
+   <h2>${name}</h2>
+   <hr/>
+   <span metal:define-slot="content">
+          CONTENT
+   </span>
+  </div>
+ <div class="footer">Site by David Reich, Paul Gulley, ANi 2011</div>
+ </body>
+</html>
+</span>

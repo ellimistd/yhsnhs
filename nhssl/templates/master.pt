@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+       <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal" > 
+   <span metal:define-macro="master">
+     <head>     
+          <title>NHSSL</title>         
+          <link rel='stylesheet' href="${request.static_url('nhssl:static/style.css')}" type="text/css"/>  
+          <link rel="stylesheet" href="${request.static_url('nhssl:static/deform/deform.css')}" type="text/css" />
+          <link rel="stylesheet" href="${request.static_url('nhssl:static/deform/form.css')}" type="text/css" />
+          <link rel="stylesheet" href="${request.static_url('nhssl:static/deform/theme.css')}" type="text/css" />
+  <!-- JavaScript -->
+  <script type="text/javascript"
+          src="${request.static_url('nhssl:static/deform/jquery-1.4.2.min.js')}"></script>
+  <script type="text/javascript"
+          src="${request.static_url('nhssl:static/deform/jquery.form.js')}"></script>
+  <script type="text/javascript"
+          src="${request.static_url('nhssl:static/deform/jquery.maskedinput-1.2.2.min.js')}"></script>
+  <script type="text/javascript"
+          src="${request.static_url('nhssl:static/deform/deform.js')}"></script>
+     <span tal:condition="red">
+     <meta http-equiv='refresh' content="1; url=${request.application_url}/${red} "/>
+     </span>
+  <script src="${request.static_url('nhssl:static/sorttable.js')}"></script> 
+     </head>
+  <body>
+     <span tal:define="pyramid import: pyramid"> <!--to import pyramid -->
+     <div class='wrapper'>
+     <div class="header">
+        <h1> <a class='titlebutton' href="${request.application_url}">NHS Service Log</a></h1>
+        <div class='logininfo'> 
+          You are logged in as<strong> <a href="${request.application_url}/users/${logged_in}">${logged_in}</a></strong>
+        </div>
+        <div class="headerbar">
+           <a class="headbutton" href="${request.application_url}/serviceLogs/${logged_in}"> View Service Log </a> -
+           <a class="headbutton" href="${request.application_url}/users/add_user"> Add User </a> -
+           <a class='headbutton' href="${request.application_url}/deadlines">Deadlines</a>
+           <span tal:condition="pyramid.traversal.find_root(request.context)['users'][logged_in].isOfficer">
+           - <a class="headbutton admin" href="${request.application_url}/users/"> View Users </a>
+           - <a class='headbutton admin' href="${request.application_url}/serviceLogs">All Service Logs</a>
+            - <a class='headbutton admin' href="${request.application_url}/serviceLogs/unverified">Unverified Events</a>
+            - <a class='headbutton admin' href="${request.application_url}/settings">Settings</a>
+           </span>
+           <span tal:condition="pyramid.traversal.find_root(request.context)['users'][logged_in].isAdvisor">
+            - <a class='headbutton admin' href="${request.application_url}/activityLogs">Activity Logs </a>
+            - <a class='headbutton admin' href="${request.application_url}/email">Email</a>
+           </span> 
+           <span tal:condition="logged_in">
+              <a class="logout" href="${request.application_url}/logout">Logout</a>
+           </span> 
+        </div>
+     </div>
+     <div class="content">
+       <h2> ${name} </h2>
+       <hr />
+       <span metal:define-slot="content">
+          CONTENT
+       </span>
+       <br/>
+       <br/>
+       <br/>
+     </div>
+    <div class="push"></div>
+    </div>
+    <div class="footer">
+      Site by David Reich, Paul Gulley. ANi 2011-12
+    </div>
+   </span>
+  </body>
+   </span>
+   <script type="text/javascript">
+   deform.load()
+   </script>
+ </html>

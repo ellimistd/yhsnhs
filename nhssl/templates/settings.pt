@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content"> 
+       <a class='navback' href='${request.application_url}'>Back to Home</a>
+       <p tal:condition="content">${content}</p>
+       <h3>Possible Sponsored Service Events:</h3>
+        <span tal:content="structure projectsform | nothing"></span>
+        <br/>
+       <a href="${request.application_url}/settings/add_project"> Add Project </a> 
+       <br/><br/>
+       <span tal:condition="pyramid.traversal.find_root(request.context)['users'][logged_in].isAdvisor">
+        <h3>Change Main Page Text:</h3>
+        <span tal:content="structure titleform | nothing"></span>
+       </span>
+     </span>
+   </span>
+ </html>

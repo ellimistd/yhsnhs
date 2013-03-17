@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content">
+		 <p>
+			You can create the CSV file in a spreadsheet and export it in CSV (Comma-Separated Values) format. The structure of the table is described below.
+
+			<br/><br/>Each row of the file must contain data for the addition of hours to users. For the addition of hours, the following information must be included (in order):  username, total verified hours to be added, sponsored verified hours to be added.
+
+			<br/><br/>Example:
+
+			<br/><br/>jwashington, 23, 10
+			<br/>bbaker, 20, 15.5
+			<br/>2010rwu, 25, 6
+			<br/>2010prandall, 30.25, 19
+
+			<br/><br/>The above example will add hours to four students.  Note that these hours, because they are not linked to any event, will only apply to the current deadline.
+			
+			<br/><br/>The members for which the hours are being imported for must already be users in the NHS website. To import NHS members, navigate to "Users" and click on "Import Persons".
+	     </p>
+         ${content}
+         <span tal:content="structure form | nothing"></span>
+     </span>
+   </span>
+ </html>

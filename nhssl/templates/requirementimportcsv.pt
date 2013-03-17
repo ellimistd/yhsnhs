@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content">
+		 <p>
+			<br/>You can create the CSV file in a spreadsheet and export it in CSV (Comma-Separated Values) format. The structure of the table is described below.
+
+			<br/><br/>Each row of the file must contain data for the addition of NHS requirement fufillments. The following information must be included (in order): username of NHS member, dues paid, GPA requiment met, present at first mandatory meeting, present at second mandatory meeting, present at third meeting, and hours completed.
+
+			<br/>Example:
+
+			<br/><br/>jwashington, yes, yes, yes, yes, yes, no
+			<br/>bbaker, y, y, n, n, n, y
+			<br/>2010rwu, NO, YES, YES, NO, NO, YES
+			<br/>2010prandall, no, no, no, no, no, no
+			<br/><br/>The above example will add the corresponding requirements to the usernames "jwashington", "bbaker", "2010rwu", and "2010prandall".
+
+			<br/><br/>"Yes", "YES", "yes", "Y", and "y" are all valid - same for "no".
+
+			<br/><br/>The members for which the NHS requirements are being imported for must already be users in the NHS website. To import NHS members, navigate to "Users" and click on "Import Persons".
+			</p>
+         ${content}
+         <span tal:content="structure form | nothing"></span>
+     </span>
+   </span>
+ </html>

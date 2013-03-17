@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+    <span metal:fill-slot="content"> 
+    <a class='navback' href="${request.application_url}/users">Back to List</a>
+    <h3 tal:condition="context.deactivated" style="color:red">
+        This user has been deactivated. 
+        <a href="${request.application_url}/users/${context.username}/reactivate">Reactivate</a> or 
+        <a href="${request.application_url}/users/${context.username}/delete">Delete</a>
+    </h3>
+     <table>
+     <tr> <td>Username:</td><td> ${context.username}</td> </tr>
+     <tr> <td>Email Address:</td><td> ${context.email}</td></tr>
+     <span tal:condition="userself">
+         <tr> <td>Student Id:</td><td> ${context.studentId}</td> </tr>
+	 <tr> <td>First Name:</td><td> ${context.firstName}</td> </tr>
+	 <tr> <td>Last Name:</td><td> ${context.lastName}</td> </tr>
+	 <tr> <td>Phone:</td><td> ${context.phone}</td> </tr>
+	 <tr> <td>Class:</td><td> ${gradclass}</td> </tr>
+	 <tr> <td>Induction Year:</td><td> ${context.inductionYear}</td> </tr>
+	 <tr> <td>Total Verified Hours:</td><td> ${context.hours}</td> </tr>
+	 <tr> <td>Sponsored Verified Hours:</td><td> ${context.sponsored}</td> </tr>
+	 <tr> <td>Paid Dues:</td><td> ${context.dues}</td> </tr>
+	 <tr> <td>Meets GPA Requirement:</td><td> ${context.gpa}</td> </tr>
+	 <tr> <td>Attended First Meeting:</td><td> ${context.firstMeeting}</td> </tr>
+	 <tr> <td>Attended Second Meeting:</td><td> ${context.secondMeeting}</td> </tr>
+	 <tr> <td>Attended third Meeting:</td><td> ${context.thirdMeeting}</td> </tr>
+	 <tr> <td>Groups: </td><td><span tal:condition='context.isStudent'>Student</span>
+                                   <span tal:condition='context.isOfficer'> Officer </span> 
+                                   <span tal:condition='context.isAdvisor'> Advisor </span></td></tr>
+         <tr> <a href="${request.application_url}/serviceLogs/${context.username}">Service Log</a> </tr>
+     </span>
+     </table>
+     <span tal:condition="userself"> <a href="${context.username}/ownpassword"> Change Password </a> </span> <br/>
+     <span tal:condition="isadvisor"> <a href="${context.username}/edit"> Edit User </a> - <a href="${context.username}/userpassword"> Change Password (As Advisor) </a> </span>
+     </span>
+   </span>
+ </html>

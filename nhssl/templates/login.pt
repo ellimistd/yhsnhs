@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+  <title>Login - NHSSL</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+  <link rel="stylesheet"
+        href="${request.static_url('nhssl:static/style.css')}"
+        type="text/css" media="screen" charset="utf-8" />
+  <!--[if lte IE 6]>
+  <link rel="stylesheet"
+        href="${request.static_url('nhssl:static/ie6.css')}"
+        type="text/css" media="screen" charset="utf-8" />
+  <![endif]-->
+</head>
+<body>
+  <div class="header">
+   <h1> NHS Service Log </h1>
+  </div>
+  <div class='content'>
+  <h2> Welcome to the NHS Service Log! </h2>
+  <hr/>
+   <div class="loginbox">
+    <b>Login</b><br/>
+    <form class="login" action="${url}" method="post">
+     <input type="hidden" name="came_from" value="${came_from}"/>
+     <input type="text" placeholder='Student ID' 
+            name="login" value="${login}"/><br/>
+     <input type="password" placeholder='Password'
+            name="password" value="${password}"/><br/>
+     <input style='text-align:center;' type="submit" name="form.submitted" value="Log In"/>
+    </form>
+   </div>
+   <div class="messagebox">
+    <span tal:replace='structure message'/>
+   </div>
+ </div>
+ <div class="footer">Site by David Reich, Paul Gulley, ANi 2011</div>
+ </body>
+</html>

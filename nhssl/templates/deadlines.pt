@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content"> 
+       <a class='navback' href='${request.application_url}'>Back to Home</a>
+       <p tal:condition="content">${content}</p>
+        <table class='userlist'  rules="rows">
+         <tr>
+          <th> Date Due</th>
+          <th> Required Total Hours</th>
+          <th> Required Sponsored Hours</th>
+          <th> Class</th>
+         </tr>
+         <span tal:repeat="deadline context">
+          <tr>
+           <td> <a href="${request.application_url}/deadlines/${deadline}">${context[deadline].dateDue.year}/${context[deadline].dateDue.month}/${context[deadline].dateDue.day}</a></td>
+           <td> ${context[deadline].hours}</td>
+           <td> ${context[deadline].sponsored}</td> 
+           <td>${context[deadline].appliedClass}</td>
+          </tr>
+        </span>
+          <p tal:condition="len(context) == 0"> No deadlines have yet been added. </p>
+        </table>
+        <br/>
+       <span tal:condition="pyramid.traversal.find_root(request.context)['users'][logged_in].isAdvisor">
+       <a href="${request.application_url}/deadlines/add_deadline"> Add Deadline </a> 
+       </span>
+     </span>
+   </span>
+ </html>

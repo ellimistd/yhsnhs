@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content">
+      <p>Service Log for <a href="${request.application_url}/users/${context.user.username}"> ${context.user.firstName} ${context.user.lastName} </a></p>
+      <a class='navback' href='${request.application_url}/serviceLogs'>Back to Logs</a> <br/>
+      <a class='navback' href='${request.application_url}/users/${context.user.username}'> Back to User</a>
+    <h3 tal:condition="context.user.deactivated" style="color:red">This servicelog has been deactivated.</h3>
+     <span tal:condition='isallowed'>
+	   <form name='formdo' action='/serviceLogs/${context.user.username}'>
+      <table class='breakdown'>
+      <tr>
+       <th colspan='4'>
+        Hours Breakdown
+       </th> 
+      </tr>
+      <tr>
+       <td>
+        Total Hours Logged
+       </td>
+       <td>
+        ${context.user.hours} Hours 
+       </td>
+       <td>
+        ${context.user.sponsored} Sponsored
+       </td>
+       </tr>
+      <span tal:repeat='dl deadlines.values()'>
+      <tr>
+       <td>
+        Deadline for: ${dl.dateDue.date()} 
+       </td>
+       <td>
+        ${dl.hours} Hours 
+       </td>
+       <td>
+        ${dl.sponsored} Sponsored
+       </td>
+       <td>
+        <span tal:condition='float(context.user.hours) >= float(dl.hours)'>
+         <span tal:condition='float(context.user.sponsored) >= float(dl.sponsored)' style='color:green'>
+        Met 
+         </span>
+         <span tal:condition='float(dl.sponsored) >= float(context.user.sponsored)' style='color:red'>
+        Unmet
+         </span>
+        </span>
+        <span tal:condition='float(dl.hours) > float(context.user.hours)' style='color:red'>
+        Unmet 
+        </span>
+       </td> 
+      </tr>
+      </span>
+      </table>
+      <table class='userlist sortable' rules='rows'>
+       <tr>
+        <span tal:condition='pyramid.traversal.find_root(context)["users"][logged_in].isOfficer'>
+          <th>Select</th>
+        </span>
+        <th> Event </th> 
+        <th> Status </th> 
+        <th> Hour </th>
+        <th> Submitted </th>
+        <th> Completed </th>
+        <th> I/S </th>
+       </tr>
+      <span tal:repeat='event content'>
+        <tr tal:condition="context[event].verified != 'Rejected/Recanted'">
+	 <span tal:condition='pyramid.traversal.find_root(context)["users"][logged_in].isOfficer'>
+          <td>
+           <input type='checkbox' name='${context[event].ID}'></input>
+          </td>
+         </span>
+         <td> <a href='${context.user.username}/${context[event].ID}'>${context[event].description}</a></td>
+         <td> ${context[event].verified}</td>
+         <td> ${context[event].hours}</td>
+         <td> ${context[event].submitted.date()} </td>
+         <td> ${context[event].completionDate.date()} </td>
+         <td> ${context[event].eventType}</td>
+        </tr>
+        <tr class="deactivated" tal:condition="context[event].verified == 'Rejected/Recanted'">
+         <td> Rejected/Recanted: </td>
+         <td> <a href='${context.user.username}/${context[event].ID}'>${context[event].description}</a></td>
+         <td> ${context[event].verified}</td>
+         <td> ${context[event].hours}</td>
+         <td> ${context[event].submitted.date()} </td>
+         <td> ${context[event].completionDate.date()} </td>
+         <td> ${context[event].eventType}</td>
+        </tr>
+      </span>
+      </table>
+      <br/>
+      <span tal:condition='pyramid.traversal.find_root(context)["users"][logged_in].isOfficer'>
+        <table><tbody>
+      <tr> <th>Action:</th> <th> <select name='action'>
+               <option value='verify'>Verify</option>
+               <option value='unverify'>Unverify</option>
+               <option value='flag'>Flag</option>
+               <option value='reject'>Reject</option>
+              </select></th></tr>
+     <tr> <th> Comment:</th> <th>
+          <textarea name="comment" title="comment" rows="5" cols="30"></textarea> 
+     </th></tr>
+     <tr tal:condition='pyramid.traversal.find_root(context)["users"][logged_in].isAdvisor'>
+          <th> Advisor's Note:</th> <th>
+          <textarea name="note" title="note" rows="5" cols="30"></textarea> 
+     </th></tr>
+     </tbody></table>
+             <input type='submit' value='submit'></input>
+      </span>
+      </form>
+       <p>
+        <a href="${request.application_url}/serviceLogs/${context.user.username}/add_independent_event"> 
+         Add Independent Service Event 
+        </a> 
+       </p><p> 
+        <a href="${request.application_url}/serviceLogs/${context.user.username}/add_sponsored_event"> 
+         Add Sponsored Service Event 
+        </a>
+       </p>
+     </span>
+     <span style='color:red;' tal:condition='not isallowed'> 
+      You don't have permission to see this page. redirecting... 
+     </span>
+    </span>
+    </span>
+ </html>

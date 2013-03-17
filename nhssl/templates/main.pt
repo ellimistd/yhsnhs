@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content">
+     <span tal:condition='name=="Home Page" and hours and not pyramid.traversal.find_root(request.context)["users"][logged_in].isAdvisor'>
+     <div class='hours_box'> 
+       <h3>Service Summary for ${logged_in}</h3>
+       <table class='statustable'>
+        <tr>
+         <th> Verified Hours </th>
+         <th> Required Hours </th>
+        </tr>
+        <tr> 
+         <td tal:condition='float(hours["V_hours"]) > float(deadline.hours)' class='good' title='Verified Hours'>
+          ${hours['V_hours']}
+         </td>
+         <td tal:condition='float(deadline.hours) > float(hours["V_hours"])' class='bad' title='Verified Hours'>
+          ${hours['V_hours']}
+         </td>
+         <td class='good' title='Required Hours'>
+         ${deadline.hours}
+         </td>
+        </tr>
+        <tr>
+          <th colspan='2'>
+            Total Hours
+          </th>
+        </tr>
+        <tr>
+          <td class='tot_hours' colspan='2'>
+           ${hours['T_hours']}
+          </td>
+        </tr>
+        <tr>
+         <th> Submitted Sponsored Hours </th>
+         <th> Submitted Independent Hours </th>
+        </tr>
+        <tr>
+         <td>${hours['S_hours']} </td>
+         <td>${hours['I_hours']} </td>
+        </tr>
+       </table>
+       <table tal:condition='flagged'  class='flagged'>
+        <tr>
+         <th colspan='2'> 
+          Flagged Events
+         </th>
+        </tr>
+        <tr>
+         <td class='subhead'> Event Description </td>
+         <td class='subhead'> Comment </td>
+        </tr>
+        <tr tal:repeat='event flagged'>
+         <td>
+          <a href='${request.application_url}/serviceLogs/${logged_in}/${event.ID}'> ${event.description} </a>
+         </td>
+         <td>
+           ${event.comment}
+         </td>
+        </tr>     
+       </table>                   
+     </div>
+     </span>
+     <span tal:condition="pyramid.traversal.find_root(request.context)['users'][logged_in].isAdvisor">
+      <div class='hours_box'> 
+       <h3>Service Summary for NHS</h3>
+       <table class='statustable'>
+        <tr>
+          <th class='tothours' colspan='2'>
+            Total Hours
+          </th>
+        </tr>
+        <tr>
+          <td class='tothours' colspan='2'>
+           ${hours['T_hours']}
+          </td>
+        </tr>
+        <tr>
+         <th> Verified Hours </th>
+         <th> Unverified Hours </th>
+        </tr>
+        <tr> 
+         <td  title='Verified Hours'>
+          ${hours['V_hours']}
+         </td>
+         <td title='Required Hours'>
+         ${hours['U_hours']}
+         </td>
+        </tr>
+        <tr>
+         <th> Submitted Sponsored Hours </th>
+         <th> Submitted Independent Hours </th>
+        </tr>
+        <tr>
+         <td>${hours['S_hours']} </td>
+         <td>${hours['I_hours']} </td>
+        </tr>
+        <tr>
+         <th> Junior Hours </th>
+         <th> Senior Hours </th>
+        </tr>
+        <tr>
+         <td>${hours['J_hours']}</td>
+         <td>${hours['Se_hours']}</td>
+        </tr>
+       </table>
+     
+     </div>
+     ${content}
+     </span>
+     <hr class='qlbar'/>
+      <div class="quicklinks">
+       <a class='ql' href="${request.application_url}/users/${logged_in}"> View Own Info</a> -
+       <a class='ql' href='${request.application_url}/serviceLogs/${logged_in}'> Check Hours </a> - 
+       <a class='ql' href='${request.application_url}/serviceLogs/${logged_in}/add_independent_event'> Add Independent Event </a> -
+       <a class='ql' href='${request.application_url}/serviceLogs/${logged_in}/add_sponsored_event'>Add Sponsored Event </a> 
+      </div>
+     <hr class='qlbar'/>
+     <center style='font-size:75%;'>Note: all tables on this site may be sorted by column. Just click the column title. </center>
+   </span>
+  </span>
+ </html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+    <span metal:fill-slot="content"> 
+     <p tal:condition="content">${content}</p>
+      <a class='navback' href='${request.application_url}/activityLogs'>Back to Logs</a>
+      <table rules='rows'  class='userlist sortable'>
+       <tr>
+	   <th> </th>
+       <th> Event </th>
+       <th>Date</th> 
+       <th> Time </th>
+       </tr>
+       <span tal:repeat="activity context">
+        <tr>
+		<td>${context[activity].ID}</td>
+         <td>
+          <a href="${request.application_url}/activityLogs/context/${activity}"> 
+           <span tal:content="structure context[activity].message | nothing"></span>
+          </a>
+         </td>
+         <td>
+         ${context.date}
+         </td>
+         <td>
+          ${context[activity].time.hour}:${context[activity].time.minute}:${context[activity].time.second}
+         </td>
+        </tr>
+       </span>
+      </table>
+     </span>
+   </span>
+ </html>
+

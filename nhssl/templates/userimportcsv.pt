@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content">
+		 <p>
+			You can create the CSV file in a spreadsheet and export it in CSV (Comma-Separated Values) format. The structure of the table is described below.
+
+			<br/><br/>Each row of the file must contain data for the creation of a person. For the creation of persons, the following information must be included (in order):  last name, first name, username, student ID number, email, phone number, year of graduation, and year of induction.
+
+			<br/><br/>Example:
+
+			<br/><br/>Washington, John, jwashington, 1045045, jwash@gmail.com, 7037637607, 2009, 2008, password
+			<br/>Baker, Beth, bbaker, 982921, bbaker@gmail.com, 7032219599, 2009, 2008, pwd
+			<br/>Wu, Rachel, 2010rwu, 923394, rwu@gmail.com, 5713442014, 2010, 2008, password
+			<br/>Randall, Peter, 2010prandall, 1003402, prandall@gmail.com, 7032241029, 2010, 2008, swordfish
+
+			<br/><br/>The above example will create four students, John Washington, Beth Baker, Rachel Wu, and Peter Randall, each with full login and contact info.
+
+			<br/><br/>Neither hours nor NHS requirements can be imported from this page.  To import them, navigate back to the list of users, and click the appropriate link.
+	     </p>
+         ${content}
+         <span tal:content="structure form | nothing"></span>
+     </span>
+   </span>
+ </html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content"> 
+       <a class='navback' href='${request.application_url}'>Back to Home</a>
+       <form action='/serviceLogs/unverified' method='POST' name='unverified'>
+        <span tal:repeat='split content.values()'>
+       <span tal:condition='len(split) > 0'>
+        <h2 tal:condition='split[0].eventType == "Sponsored" and split[0].verified != "Rejected/Recanted"'>Sponsored Events </h2>
+        <h2 tal:condition='split[0].eventType == "Independent" and split[0].verified != "Rejected/Recanted"'>Independent Events </h2>
+        <h2 tal:condition='split[0].verified == "Rejected/Recanted"'> Rejected/Recanted Events </h2>
+        <table class='sortable userlist' rules='rows'>
+         <tr>
+		  <th> Select</th>
+          <th> Flagged</th>
+          <th> Event</th>
+          <th> Event Type </th>
+          <th> Submitted</th>
+          <th> Completed</th>
+          <th> Elapsed Time</th>
+          <th> Hours</th>
+          <th> User's Name</th>
+         </tr>
+          <span tal:repeat="event split">
+        <tr tal:condition="event.verified!='Rejected/Recanted'">
+            <td sorttable_customkey='${event.ID}'> 
+             <input type='checkbox' id="event" name='${event.ID}-${event.user.username}'></input>
+            </td>
+            <td> <span tal:condition="event.verified == 'Flagged'" style='color:red;'>X</span></td>
+            <td> <a href="${request.application_url}/serviceLogs/${event.user.username}/${event.ID}">${event.description}</a></td>
+            <td> ${event.eventType} </td> 
+            <td> ${event.submitted.date()}</td>
+            <td> ${event.completionDate.date()}</td>
+            <td> 
+             <span style='color:green;' tal:condition="15 > abs(event.submitted-event.completionDate).days"> 
+               ${abs(event.submitted-event.completionDate).days} days
+             </span> 
+             <span style='color:red;' tal:condition="abs(event.submitted-event.completionDate).days > 14"> 
+               ${abs(event.submitted-event.completionDate).days} days 
+             </span> 
+            </td>
+            <td> ${event.hours}</td>
+            <td> 
+             <a href="${request.application_url}/users/${event.user.username}">${event.user.firstName} ${event.user.lastName}</a>
+            </td>
+           </tr>
+        <tr class="deactivated" tal:condition="event.verified=='Rejected/Recanted'">
+            <td sorttable_customkey='${event.ID}'>Rejected/Recanted:</td>
+            <td> </td>
+            <td> <a href="${request.application_url}/serviceLogs/${event.user.username}/${event.ID}">${event.description}</a></td>
+            <td> ${event.eventType} </td> 
+            <td> ${event.submitted.date()}</td>
+            <td> ${event.completionDate.date()}</td>
+            <td> 
+             <span style='color:green;' tal:condition="15 > abs(event.submitted-event.completionDate).days"> 
+               ${abs(event.submitted-event.completionDate).days} days
+             </span> 
+             <span style='color:red;' tal:condition="abs(event.submitted-event.completionDate).days > 14"> 
+               ${abs(event.submitted-event.completionDate).days} days 
+             </span> 
+            </td>
+            <td> ${event.hours}</td>
+            <td> 
+             <a href="${request.application_url}/users/${event.user.username}">${event.user.firstName} ${event.user.lastName}</a>
+            </td>
+           </tr>
+          </span>
+         </table>
+       </span>
+        </span>
+         <span tal:condition='len(content["ind"])==0 and len(content["spons"])==0'>
+          There are no unverified events
+         </span>
+        </form>
+       <br/>
+               <span tal:condition='len(content["ind"])>0 or len(content["spons"])>0'> 
+        <table><tbody>
+          <tr> <th>Action:</th> <th> <select name='action'>
+                   <option value='verify'>Verify</option>
+                   <option value='unverify'>Unverify</option>
+                   <option value='flag'>Flag</option>
+                   <option value='deactivate'>Reject</option>
+                  </select></th></tr>
+         <tr> <th> Comment:</th> <th>
+              <textarea name="comment" title="comment" rows="5" cols="30"></textarea> 
+         </th></tr>
+         </tbody></table>
+             <input type='submit' value='submit'></input>
+         </span>
+     </span>
+   </span>
+ </html>

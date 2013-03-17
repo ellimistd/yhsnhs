@@ -1,0 +1,193 @@
+/* DESIGNED BY DAVID COX */
+
+body {
+  background: #fcfcff;
+  font: 13px arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* MENUBAR -- TOP BAR */
+
+#menu {
+  color: #fff;
+  font: bold 12px arial, sans-serif;
+  line-height: 24px;
+  margin-top:2px; 
+  overflow: hidden;
+  position: absolute; 
+  text-align: center;
+  width: 100%;
+}
+
+#menu ul {
+  float: left;
+  list-style:none;
+  margin: 0px;
+  margin-left: 2px;
+  padding: 2px;
+  width: 150px;
+}
+
+#menu ul a {
+  display: block;
+}
+
+#menu ul .nav_item {
+  cursor: pointer;
+  display: none;
+  font: bold 12px arial, sans-serif;
+  min-height: 15px !important;
+  height: auto !important;
+  height: 15px;
+}
+
+#menu ul .action_item {
+  cursor: pointer;
+  display: none;
+  font: bold 12px arial, sans-serif;
+  min-height: 15px !important;
+  height: auto !important;
+  height: 15px;
+}
+
+#menu #breadcrumbs {
+  float: left;
+  left: 314px !important;
+  left: 308px;
+  list-style:none;
+  margin: 0px;
+  padding: 2px;
+  position: absolute;
+  overflow: hidden;
+  text-align: left;
+  top: 0px;
+  width: 100%;
+}
+
+#menu #breadcrumbs a {
+  color: #ccccdd;
+  text-align: left;
+  text-decoration: none;
+}
+
+#menu #breadcrumbs a:hover {
+  color: #eeeeff;
+  text-decoration: none;
+}
+
+#menu #breadcrumbs span {
+  color: #fff
+}
+
+#menu #login {
+  color: #fff;
+  overflow: hidden;
+  padding: 2px;
+  position: absolute;
+  right: 10px;
+  top: 0px;
+}
+
+.clear {
+  clear: both;
+  height:10px;
+}
+
+/* CONTENT */
+
+#content {
+  margin: 40px 40px 40px 40px;
+}
+
+#content h1 {
+  border-bottom: 1px solid #ccc;
+  font: 24px arial, sans-serif;
+}
+
+#content p {
+  font: 13px arial, sans-serif;
+  line-height: 150%;
+  text-align: justify;
+}
+
+#content a {
+  text-decoration: none;
+}
+
+#content a:hover {
+  text-decoration: underline;
+}
+
+#content h2 {
+  border-bottom: 1px solid #ccc;
+  font: 18px arial, sans-serif;
+}
+
+#content h3 {
+  font: 18px arial, sans-serif;
+}
+
+#content .deleted {
+  color: #999;
+}
+
+/* FOOTER BAR ETC. */
+
+#footer {
+  background: url('footer.gif');
+  background-color: #999;
+  bottom: 0px !important;
+  bottom: auto;
+  height: 36px;
+  left: expression( (0 - this.offsetWidth + ( document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body.clientWidth ) + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
+  overflow: hidden;
+  position: fixed !important;
+  position: absolute;
+  right: auto;
+  top: expression( (0 - this.offsetHeight + ( document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+  width: 100%;
+}
+
+#footer p {
+  color: #fff;
+  font: 10px arial, sans-serif;
+  line-height: 36px;  
+  margin: 0px;
+  text-align: center;
+}
+
+/* CONTAINER TABLE */
+
+table.container {
+  border-collapse: collapse;
+  border-top: 1px solid #ccc;
+  font-size: 14px;
+}
+
+table.container td {
+  border-bottom: 1px solid #ccc;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+table.container th {
+  border-bottom: 1px solid #ccc;
+  font-size: 12px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align: left;
+}
+
+/* CSV MESSAGES */
+.info {
+  color: #0f0;
+  font-weight: bold;
+}
+
+.error {
+  color: #f00;
+  font-weight: bold;
+}
+
+

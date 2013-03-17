@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content"> 
+       <a class='navback' href='${request.application_url}'>Back to Home</a>
+       <p tal:condition="content">${content}</p>
+       <form name='userdo' action='/users' method='POST'>
+        <table class='userlist sortable'  rules="rows">
+	     <caption>Sort table by clicking on header for row</caption>
+         <tr>
+		<span tal:condition='pyramid.traversal.find_root(context)["users"][logged_in].isAdvisor'><th>Select</th></span>
+          <th> Last Name</th>
+          <th> First Name</th>
+          <th> Email</th>
+          <th> Induction Year</th>
+          <th> Graduation Year</th>
+         </tr>
+         <span tal:repeat="user userlist">
+          <tr tal:condition="not user.deactivated">
+           <span tal:condition='pyramid.traversal.find_root(context)["users"][logged_in].isAdvisor'>
+            <td>
+             <input type='checkbox' name="${user.username}"></input>
+            </td>
+           </span>
+           <td> <a href="${request.application_url}/users/${user.username}">${context[user.username].lastName}</a></td>
+           <td> ${context[user.username].firstName}</td>
+           <td> ${context[user.username].email}</td> 
+           <td> ${context[user.username].inductionYear}</td>
+           <td> ${context[user.username].gradYear}</td>
+          </tr>
+          <tr class="deactivated" tal:condition="user.deactivated">
+           <td> Deactivated: </td>
+           <td> <a href="${request.application_url}/users/${user.username}">${context[user.username].lastName}</a></td>
+           <td> ${context[user.username].firstName}</td>
+           <td> ${context[user.username].email}</td> 
+           <td> ${context[user.username].inductionYear}</td>
+           <td> ${context[user.username].gradYear}</td>
+          </tr>
+        </span>
+        </table>
+          <p tal:condition="len(context) == 0"> No users have yet been added. </p>
+          <span tal:condition='pyramid.traversal.find_root(context)["users"][logged_in].isAdvisor'>Action: 
+            <select name="action"> 
+                <option value='paid'>Has Paid Dues</option>
+                <option value='1meet'>Attended First Meeting</option>
+                <option value='2meet'>Attended Second Meeting</option>
+                <option value='3meet'>Attended Third Meeting</option>
+                <option value='gpa'>Meets GPA</option>
+            </select> 
+          <input type='submit' value='submit' ></input></span>
+        </form>
+        <br/>
+        <span tal:condition='pyramid.traversal.find_root(context)["users"][logged_in].isAdvisor'>
+         <a href="${request.application_url}/users/csvexport">Export Users from CSV </a> - 
+         <a href="${request.application_url}/users/csvimport">Import Users from CSV</a> - 
+         <a href="${request.application_url}/users/requirementsimportcsv">Import Requirements from CSV </a>
+        </span>
+     </span>
+   </span>
+ </html>

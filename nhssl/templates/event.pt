@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal">
+   <span metal:use-macro="main.macros['master']">
+     <span metal:fill-slot="content">  
+     <a class='navback' href='${request.application_url}/serviceLogs/${context.user.username}'>Back to Logs</a>
+        <h3 tal:condition="context.verified=='Rejected/Recanted' and pyramid.traversal.find_root(context)['users'][logged_in].isOfficer" style="color:red">This event has been deactivated.
+        <a href="${request.application_url}/serviceLogs/${context.user.username}/${context.ID}/reactivate">Reactivate</a> </h3>
+     <h3> Event for ${context.user.firstName} ${context.user.lastName}</h3>
+     <ul>
+     <li> State of Verification: ${context.verified}</li>
+     <li> Type of Service Event: ${context.eventType} </li>
+     <li> Date of Completion: ${context.completionDate.year}/${context.completionDate.month}/${context.completionDate.day} </li>
+     <li> Date of Submission: ${context.submitted.year}/${context.submitted.month}/${context.submitted.day} </li>
+     <li> Hours Volunteered: ${context.hours} </li>
+	 <li> Service: ${context.description} </li>
+	 <li> Description: ${context.taskDescription} </li>
+	 <li> Contact: ${context.contact} </li>
+	 <li> Contact Information: ${context.contactInfo} </li>
+	 <li tal:condition="context.comment"> Comment: ${context.comment} </li>
+	 <li tal:condition="context.advisorNote and isAdvisor"> Advisor's Note: ${context.advisorNote} </li>
+     </ul>
+     <span tal:condition='((context.verified != "Verified") or (isAdvisor) or (isOfficer))'>
+     <a href="${request.application_url}/serviceLogs/${context.__parent__.user.username}/${context.ID}/edit">Edit Event</a> 
+     </span><br/><br/>
+     <span tal:condition="isOfficer">
+		 <h4>Verify Event:</h4>
+		 <span tal:content="structure form | None"></span>
+     </span>
+     </span>
+   </span>
+ </html>
